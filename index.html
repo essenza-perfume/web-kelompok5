@@ -1165,15 +1165,26 @@
         const searchBox = document.getElementById("search-box");
 
         function toggleSearch() {
-            searchBox.classList.toggle("active");
-            if(searchBox.classList.contains("active")) {
-                searchInput.focus();
-            }
+    searchBox.classList.toggle("active");
+
+         if (searchBox.classList.contains("active")) {
+        searchInput.focus();
+         } else {
+        // Kalau search ditutup → reset produk
+        searchInput.value = "";
+        renderProducts();
+         }
         }
 
-        searchInput.addEventListener("keyup", (e) => {
-            renderProducts(e.target.value);
-        });
+        searchInput.addEventListener("input", (e) => {
+    const value = e.target.value.trim();
+
+    if (value === "") {
+        renderProducts(); // Balik ke semua produk
+    } else {
+        renderProducts(value);
+    }
+});
 
         // --- CART FUNCTIONALITY ---
         function addToCart(id) {
