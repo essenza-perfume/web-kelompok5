@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESSENZA - Luxury Perfume Collection</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Boxicons -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary-color: #800606;
+            --secondary-color: #ee1c47;
+            --text-dark: #111;
+            --text-light: #707070;
+            --bg-light: #f9f9f9;
+            --white: #ffffff;
+            --shadow: 0 5px 20px rgba(0,0,0,0.1);
+            --transition: all 0.4s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            font-family: 'Jost', sans-serif;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        body {
+            background-color: var(--white);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 10%;
+            transition: var(--transition);
+        }
+
+        header.sticky {
+            background-color: var(--white);
+            padding: 15px 10%;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        
+        .logo {
+            height: 50;
+            width: 50;  
+            margin-right: 10px;
+            object-fit: contain;
+        }
+
+        .logo span {
+            font-weight: 100;
+            font-size: 24px;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+
+        .navmenu {
+            display: flex;
+        }
+
+        .navmenu a {
+            color: var(--text-dark);
+            font-size: 16px;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .navmenu a:hover, .navmenu a.active {
+            color: var(--primary-color);
+        }
+
+        .navmenu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            bottom: 5px;
+            left: 0;
+            transition: 0.3s;
+        }
+
+        .navmenu a:hover::after, .navmenu a.active::after {
+            width: 100%;
+        }
+
+        .nav-icon {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-icon-item {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-icon i {
+            color: var(--text-dark);
+            font-size: 24px;
+            transition: var(--transition);
+        }
+
+        .nav-icon i:hover {
+            transform: scale(1.1);
+            color: var(--primary-color);
+        }
+
+        .badge-count {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background-color: var(--secondary-color);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 50%;
+            display: none; 
+        }
+
+        #menu-icon {
+            font-size: 30px;
+            color: var(--text-dark);
+            z-index: 10001;
+            cursor: pointer;
+            display: none;
+        }
+
+        /* --- SEARCH BOX --- */
+        .search-box {
+            position: absolute;
+            top: 100%;
+            right: 10%;
+            width: 300px;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            padding: 15px;
+            border-radius: 0 0 10px 10px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .search-box.active {
+            display: block;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- SIDEBARS (CART & WISHLIST) --- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 360px;
+            height: 100vh;
+            background: var(--white);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            z-index: 10000;
+            transition: 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .sidebar-header h2 {
+            font-size: 20px;
+            color: var(--primary-color);
+        }
+
+        .close-sidebar {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .sidebar-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            align-items: center;
+        }
+
+        .sidebar-item img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-details h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .item-details p {
+            font-size: 13px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .remove-item {
+            color: #999;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .remove-item:hover { color: var(--secondary-color); }
+
+        .sidebar-footer {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .total-price {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .empty-msg {
+            text-align: center;
+            color: #999;
+            margin-top: 50px;
+        }
+
+        /* --- SECTIONS GLOBAL --- */
+        section {
+            padding: 80px 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-transform: capitalize;
+            margin-bottom: 10px;
+        }
+
+        .section-title span {
+            color: var(--primary-color);
+        }
+
+        /* --- HERO SECTION --- */
+        .main-home {
+            width: 100%;
+            height: 100vh;
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3)), url('Gambar/banner-3.png');
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .main-text {
+            color: var(--white);
+            max-width: 600px;
+        }
+
+        .main-text h5 {
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: #eee;
+        }
+
+        .main-text h1 {
+            font-size: 65px;
+            line-height: 1.1;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .main-text p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 35px;
+            color: #ddd;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 34px;
+            background: var(--primary-color);
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 5px;
+            transition: var(--transition);
+            border: 2px solid var(--primary-color);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn.outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn.outline:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* --- PRODUCTS --- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+
+        .product-img {
+            position: relative;
+            height: 350px;
+            overflow: hidden;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.05);
+        }
+
+        .badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        .product-actions {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding-bottom: 20px;
+            transition: 0.4s;
+            z-index: 3;
+        }
+
+        .product-card:hover .product-actions {
+            bottom: 0;
+        }
+
+        .action-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dark);
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        
+        .action-btn.active-icon {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .product-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stars {
+            color: #FFC107;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .product-info h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        /* --- REVIEWS --- */
+        .client-reviews {
+            background-color: var(--bg-light);
+            text-align: center;
+        }
+
+        .review-box {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .quote-icon {
+            font-size: 40px;
+            color: var(--primary-color);
+            opacity: 0.3;
+            margin-bottom: 10px;
+        }
+
+        .review-text {
+            font-size: 18px;
+            line-height: 1.6;
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .reviewer-info img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .reviewer-info h5 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .reviewer-info span {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* --- NEWS / BLOG --- */
+        .Update-news {
+            padding-bottom: 40px;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .blog-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .blog-card:hover .blog-img img {
+            transform: scale(1.1);
+        }
+
+        .blog-content {
+            padding: 20px;
+        }
+
+        .blog-date {
+            font-size: 13px;
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .blog-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+            display: block;
+        }
+
+        .blog-link {
+            font-size: 14px;
+            color: var(--text-dark);
+            font-weight: 600;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 2px;
+            transition: 0.3s;
+        }
+
+        .blog-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- FOOTER --- */
+        .contact {
+            background: #111;
+            color: var(--white);
+            padding-top: 70px;
+            padding-bottom: 70px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-col h4 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--white);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h4::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .footer-col p {
+            color: #aaa;
+            font-size: 14px;
+            line-height: 2;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .footer-col p:hover {
+            color: var(--white);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            width: 35px;
+            height: 35px;
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary-color);
+        }
+
+        .subscribe-form input {
+            width: 100%;
+            padding: 12px;
+            background: #222;
+            border: 1px solid #333;
+            color: var(--white);
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .subscribe-form button {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary-color);
+            border: none;
+            color: var(--white);
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .subscribe-form button:hover {
+            background: var(--secondary-color);
+        }
+
+        .copyright {
+            background: #000;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #222;
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* --- EXTRAS --- */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary-color);
+            color: var(--white);
+            width: 45px;
+            height: 45px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.4s;
+            z-index: 999;
+        }
+
+        .scroll-top.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--white);
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-left: 5px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateX(200%);
+            transition: 0.5s;
+            z-index: 10000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast i {
+            color: #27b737;
+            font-size: 24px;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 991px) {
+            header { padding: 15px 5%; }
+            section { padding: 50px 5%; }
+            .main-home { padding: 0 5%; justify-content: center; text-align: center; }
+            .main-text h1 { font-size: 48px; }
+            .main-text p { font-size: 16px; margin: 0 auto 30px; }
+        }
+
+        @media (max-width: 768px) {
+            #menu-icon { display: block; }
+            
+            .navmenu {
+                position: absolute;
+                top: 100%;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: var(--white);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 50px;
+                transition: 0.4s ease;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+
+            .navmenu.open {
+                left: 0;
+            }
+
+            .navmenu a {
+                display: block;
+                margin: 20px 0;
+                font-size: 20px;
+            }
+            .sidebar { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toast">
+        <i class='bx bxs-check-circle'></i>
+        <div class="toast-content">
+            <h4 style="font-size: 16px; margin-bottom: 2px;">Sukses</h4>
+            <p style="font-size: 14px; color: #555;">Pesan Notifikasi</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <a href="#" class="logo">
+            <img src="Gambar/logo.png" style="height: 150px; width: auto;">
+        </a>
+
+        <ul class="navmenu" id="navmenu">
+            <li><a href="#home" class="active">Beranda</a></li>
+            <li><a href="#products">Produk</a></li>
+            <li><a href="#about">Kata Mereka</a></li>
+            <li><a href="#blog">Blog</a></li>
+            <li><a href="#contact">Kontak</a></li>
+        </ul>
+
+        <div class="nav-icon">
+            <!-- Search Icon with Toggle Input -->
+            <div class="nav-icon-item" onclick="toggleSearch()">
+                <i class='bx bx-search'></i>
+            </div>
+            
+            <!-- Wishlist Icon -->
+            <div class="nav-icon-item" onclick="toggleWishlistSidebar()">
+                <i class='bx bx-heart'></i>
+                <span class="badge-count" id="wishlist-count">0</span>
+            </div>
+            
+            <!-- Cart Icon -->
+            <div class="nav-icon-item" onclick="toggleCartSidebar()">
+                <i class='bx bx-cart-alt'></i>
+                <span class="badge-count" id="cart-count">0</span>
+            </div>
+            
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+
+        <!-- Search Box -->
+        <div class="search-box" id="search-box">
+            <input type="search" id="search-input" placeholder="Cari parfum favoritmu...">
+        </div>
+    </header>
+
+    <!-- Cart Sidebar -->
+    <div class="sidebar" id="cart-sidebar">
+        <div class="sidebar-header">
+            <h2>Keranjang Belanja</h2>
+            <i class='bx bx-x close-sidebar' onclick="toggleCartSidebar()"></i>
+        </div>
+        <div class="sidebar-content" id="cart-items">
+            <!-- Cart items will be injected here -->
+            <p class="empty-msg">Keranjang Anda masih kosong.</p>
+        </div>
+        <div class="sidebar-footer">
+            <div class="total-price">
+                <span>Total:</span>
+                <span id="cart-total">Rp 0</span>
+            </div>
+            <a href="#" class="checkout-btn" onclick="checkout()">Checkout</a>
+        </div>
+    </div>
+
+    <!-- Wishlist Sidebar -->
+    <div class="sidebar" id="wishlist-sidebar">
+        <div class="sidebar-header">
+            <h2>Favorit Saya</h2>
+            <i class='bx bx-x close-sidebar' onclick="toggleWishlistSidebar()"></i>
+        </div>
+        <div class="sidebar-content" id="wishlist-items">
+             <!-- Wishlist items will be injected here -->
+             <p class="empty-msg">Belum ada produk favorit.</p>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="main-home" id="home">
+        <div class="main-text">
+            <h5>New Collection 2026</h5>
+            <h1>Keanggunan dalam <br> Setiap Tetesan</h1>
+            <p>Temukan aroma khas yang mencerminkan kepribadian Anda. Dibuat dari bahan-bahan pilihan terbaik untuk ketahanan wanginya sepanjang hari.</p>
+            <a href="#products" class="btn">Belanja Sekarang</a>
+            <a href="#about" class="btn outline" style="margin-left: 10px;">Pelajari Lebih Lanjut</a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <div class="section-title">
+            <h2>Koleksi <span>Terbaik</span></h2>
+            <p style="color: #666;">Pilihan parfum paling diminati oleh pelanggan kami</p>
+        </div>
+
+        <!-- Container for JS rendered products -->
+        <div class="products-grid" id="product-container">
+            <!-- Products will be generated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="client-reviews" id="about">
+        <div class="section-title">
+            <h2>Kata <span>Mereka</span></h2>
+        </div>
+        <div class="review-box">
+            <i class='bx bxs-quote-alt-left quote-icon'></i>
+            <p class="review-text">"Saya sudah mencoba berbagai merek parfum lokal, tapi Essenza memberikan kesan yang berbeda. Wanginya sangat mewah, tahan lama, dan kemasannya sangat elegan. Sangat direkomendasikan untuk hadiah spesial."</p>
+            <div class="reviewer-info">
+                <img src="https://i.pravatar.cc/100?img=5" alt="Reviewer">
+                <h5>Sarah Amalia</h5>
+                <span>Entrepreneur</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog/News Section -->
+    <section class="Update-news" id="blog">
+        <div class="section-title">
+            <h2>Berita & <span>Tips</span></h2>
+        </div>
+        <div class="blog-grid">
+            <div class="blog-card">
+                <div class="blog-img">
+                    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=80" alt="Blog 1">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-date">10 Feb 2026</span>
+                    <a href="#" class="blog-title">Tips Memilih Parfum Sesuai Kepribadian</a>
+                    <a href="#" class="blog-link">Baca Selengkapnya</a>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-img">
+                    <img src="https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=600&q=80" alt="Blog 2">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-date">12 Feb 2026</span>
+                    <a href="#" class="blog-title">Cara Menyimpan Parfum Agar Tahan Lama</a>
+                    <a href="#" class="blog-link">Baca Selengkapnya</a>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-img">
+                    <img src="https://images.unsplash.com/photo-1585120040315-2241b774ad0f?auto=format&fit=crop&w=600&q=80" alt="Blog 3">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-date">14 Feb 2026</span>
+                    <a href="#" class="blog-title">Promo Spesial Hari Valentine</a>
+                    <a href="#" class="blog-link">Baca Selengkapnya</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="contact" id="contact">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo" style="margin-bottom: 100px;">
+                    <img src="Gambar/logo.png" style="height: 100px; width: auto;">
+                </div>
+                <p>Jalan Asia Afrika No. 123<br>Bandung, Jawa Barat, 40111</p>
+                <p>+62 812 3456 7890</p>
+                <div class="social-links">
+                    <a href="#"><i class='bx bxl-instagram'></i></a>
+                    <a href="#"><i class='bx bxl-facebook'></i></a>
+                    <a href="#"><i class='bx bxl-whatsapp'></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Navigasi</h4>
+                <p>Beranda</p>
+                <p>Produk Kami</p>
+                <p>Tentang Kami</p>
+                <p>Kontak</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Bantuan</h4>
+                <p>FAQ</p>
+                <p>Pengiriman</p>
+                <p>Pengembalian Barang</p>
+                <p>Metode Pembayaran</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Newsletter</h4>
+                <p>Dapatkan info promo terbaru via email.</p>
+                <form class="subscribe-form">
+                    <input type="email" placeholder="Email Anda...">
+                    <button type="button" onclick="showToast('Berhasil Berlangganan!')">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div class="copyright">
+        <p>Copyright &copy; 2026 Kelompok 5 E-Commerce. All Rights Reserved.</p>
+        <p style="margin-top: 5px; font-size: 12px; color: #ffffff;">Sifa Fauzia-21222044 | Messya Adelia-21222047 | Rayyan Zaki-21222048 | Wanda Alya-21222055 | William Nathanael-21222070 | Diva Alfinda-21222073 | Ani Labora-21222086</p>
+    </div>
+
+    <!-- Scroll Top Button -->
+    <a href="#home" class="scroll-top"><i class='bx bx-up-arrow-alt'></i></a>
+
+    <!-- JavaScript -->
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: "Essenza Aurora",
+                price: 349000,
+                image: "Gambar/gambar1.png",
+                badge: "Best Seller",
+                badgeColor: "#800606"
+            },
+            {
+                id: 2,
+                name: "Essenza Ambre",
+                price: 499000,
+                image: "Gambar/gambar2.png",
+                badge: "New",
+                badgeColor: "#27b737"
+            },
+            {
+                id: 3,
+                name: "Essenza Bloom",
+                price: 299000,
+                image: "Gambar/gambar3.png",
+                badge: "Sale",
+                badgeColor: "#800606"
+            },
+            {
+                id: 4,
+                name: "Essenza Luna",
+                price: 550000,
+                image: "Gambar/gambar4.png",
+                badge: "Limited",
+                badgeColor: "#111"
+            },
+            {
+                id: 5,
+                name: "Essenza Noir",
+                price: 310000,
+                image: "Gambar/gambar5.png",
+                badge: "Fresh",
+                badgeColor: "#0096FF"
+            },
+            {
+                id: 6,
+                name: "Essenza Solea",
+                price: 420000,
+                image: "Gambar/gambar6.png",
+                badge: "Sweet",
+                badgeColor: "#D4AF37"
+            },
+            {
+                id: 7,
+                name: "Essenza Velvet",
+                price: 285000,
+                image: "Gambar/gambar7.png",
+                badge: "Popular",
+                badgeColor: "#FF8C00"
+            }
+        ];
+
+        // --- STATE MANAGEMENT ---
+        let cart = [];
+        let wishlist = [];
+
+        // --- RENDER PRODUCTS ---
+        const productContainer = document.getElementById("product-container");
+        
+        function renderProducts(filterText = "") {
+            productContainer.innerHTML = "";
+            
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(filterText.toLowerCase())
+            );
+
+            if (filteredProducts.length === 0) {
+                productContainer.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: #777;'>Produk tidak ditemukan.</p>";
+                return;
+            }
+
+            filteredProducts.forEach(product => {
+                // Check if in wishlist for active icon
+                const isWishlist = wishlist.some(item => item.id === product.id);
+                const heartClass = isWishlist ? "active-icon" : "";
+
+                const html = `
+                <div class="product-card">
+                    <div class="badge" style="background: ${product.badgeColor};">${product.badge}</div>
+                    <div class="product-img">
+                        <img src="${product.image}" alt="${product.name}">
+                        <div class="product-actions">
+                            <div class="action-btn" onclick="addToCart(${product.id})"><i class='bx bx-cart-add'></i></div>
+                            <div class="action-btn ${heartClass}" onclick="toggleWishlist(${product.id})" id="wish-btn-${product.id}"><i class='bx bx-heart'></i></div>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="stars">
+                            <i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star-half'></i>
+                        </div>
+                        <h4>${product.name}</h4>
+                        <div class="price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                    </div>
+                </div>
+                `;
+                productContainer.insertAdjacentHTML("beforeend", html);
+            });
+        }
+
+        // Initialize Render
+        renderProducts();
+
+        // --- SEARCH FUNCTIONALITY ---
+        const searchInput = document.getElementById("search-input");
+        const searchBox = document.getElementById("search-box");
+
+        function toggleSearch() {
+            searchBox.classList.toggle("active");
+            if(searchBox.classList.contains("active")) {
+                searchInput.focus();
+            }
+        }
+
+        searchInput.addEventListener("keyup", (e) => {
+            renderProducts(e.target.value);
+        });
+
+        // --- CART FUNCTIONALITY ---
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const cartItem = cart.find(c => c.id === id);
+
+            if (cartItem) {
+                cartItem.quantity++;
+            } else {
+                cart.push({...product, quantity: 1});
+            }
+            
+            updateCartUI();
+            showToast(`Ditambahkan: ${product.name}`);
+            
+            // Open cart sidebar to show user
+            document.getElementById("cart-sidebar").classList.add("active");
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(c => c.id !== id);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById("cart-items");
+            const cartCount = document.getElementById("cart-count");
+            const cartTotal = document.getElementById("cart-total");
+
+            // Update Badge
+            const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.innerText = totalQty;
+            cartCount.style.display = totalQty > 0 ? "block" : "none";
+
+            // Update List
+            cartItemsContainer.innerHTML = "";
+            let totalPrice = 0;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `<p class="empty-msg">Keranjang Anda masih kosong.</p>`;
+            } else {
+                cart.forEach(item => {
+                    totalPrice += item.price * item.quantity;
+                    cartItemsContainer.innerHTML += `
+                        <div class="sidebar-item">
+                            <img src="${item.image}" alt="${item.name}">
+                            <div class="item-details">
+                                <h4>${item.name}</h4>
+                                <p>Rp ${item.price.toLocaleString('id-ID')} x ${item.quantity}</p>
+                            </div>
+                            <i class='bx bx-trash remove-item' onclick="removeFromCart(${item.id})"></i>
+                        </div>
+                    `;
+                });
+            }
+
+            cartTotal.innerText = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+        }
+
+        function toggleCartSidebar() {
+            document.getElementById("cart-sidebar").classList.toggle("active");
+            document.getElementById("wishlist-sidebar").classList.remove("active"); // Close others
+        }
+
+        function checkout() {
+            if(cart.length === 0) {
+                showToast("Keranjang kosong!");
+            } else {
+                showToast("Terima kasih sudah berbelanja!");
+                cart = [];
+                updateCartUI();
+                toggleCartSidebar();
+            }
+        }
+
+        // --- WISHLIST FUNCTIONALITY ---
+        function toggleWishlist(id) {
+            const index = wishlist.findIndex(item => item.id === id);
+            const product = products.find(p => p.id === id);
+            const btn = document.getElementById(`wish-btn-${id}`);
+
+            if (index === -1) {
+                wishlist.push(product);
+                showToast(`Disukai: ${product.name}`);
+                if(btn) btn.classList.add("active-icon");
+            } else {
+                wishlist.splice(index, 1);
+                showToast(`Dihapus dari favorit`);
+                if(btn) btn.classList.remove("active-icon");
+            }
+            updateWishlistUI();
+        }
+
+        function removeFromWishlist(id) {
+            toggleWishlist(id); // Re-use logic
+        }
+
+        function updateWishlistUI() {
+            const wishlistContainer = document.getElementById("wishlist-items");
+            const wishlistCount = document.getElementById("wishlist-count");
+
+            // Update Badge
+            wishlistCount.innerText = wishlist.length;
+            wishlistCount.style.display = wishlist.length > 0 ? "block" : "none";
+
+            // Update List
+            wishlistContainer.innerHTML = "";
+            
+            if (wishlist.length === 0) {
+                wishlistContainer.innerHTML = `<p class="empty-msg">Belum ada produk favorit.</p>`;
+            } else {
+                wishlist.forEach(item => {
+                    wishlistContainer.innerHTML += `
+                        <div class="sidebar-item">
+                            <img src="${item.image}" alt="${item.name}">
+                            <div class="item-details">
+                                <h4>${item.name}</h4>
+                                <p>Rp ${item.price.toLocaleString('id-ID')}</p>
+                                <span style="font-size:12px; color:#555; cursor:pointer; text-decoration:underline;" onclick="addToCart(${item.id})">Masukan Keranjang</span>
+                            </div>
+                            <i class='bx bx-x remove-item' onclick="removeFromWishlist(${item.id})"></i>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        function toggleWishlistSidebar() {
+            document.getElementById("wishlist-sidebar").classList.toggle("active");
+            document.getElementById("cart-sidebar").classList.remove("active"); // Close others
+        }
+
+
+        // --- UI HELPER FUNCTIONS ---
+        // Header Sticky
+        const header = document.querySelector("#header");
+        const scrollTopBtn = document.querySelector(".scroll-top");
+
+        window.addEventListener("scroll", function() {
+            header.classList.toggle("sticky", window.scrollY > 0);
+            scrollTopBtn.classList.toggle("active", window.scrollY > 300);
+            updateActiveMenu();
+        });
+
+        // Mobile Menu
+        let menu = document.querySelector('#menu-icon');
+        let navmenu = document.querySelector('.navmenu');
+
+        menu.onclick = () => {
+            menu.classList.toggle('bx-x');
+            navmenu.classList.toggle('open');
+        }
+
+        document.querySelectorAll('.navmenu a').forEach(n => n.addEventListener('click', () => {
+            menu.classList.remove('bx-x');
+            navmenu.classList.remove('open');
+        }));
+
+        // Toast
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            const toastMsg = toast.querySelector("p");
+            
+            toastMsg.innerText = message;
+            toast.classList.add("show");
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3000);
+        }
+
+        // Active Menu Highlight
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.navmenu a');
+
+        function updateActiveMenu() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
